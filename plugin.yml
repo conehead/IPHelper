@@ -1,0 +1,18 @@
+name: IPHelper
+main: com.connor.iphelper.IPHelper
+version: 1.0
+commands:
+    ip:
+        usage: /ip <lookup|ban|unban> <(user/player/name)|ip> NameOrIP
+permissions:
+    ip.*:
+        description: Allows a player to use all IPhelper functions
+        children:
+            ip.lookup: true
+            ip.ban: true
+    ip.lookup:
+        description: Allows a player to look up a player/IP
+    ip.ban:
+        description: Allows a player to ban/unban a player/IP
+        children:
+            ip.lookup: true
