@@ -13,10 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class IPHelper extends JavaPlugin implements Listener {
@@ -115,10 +112,9 @@ public class IPHelper extends JavaPlugin implements Listener {
 
     private boolean lookupName(CommandSender sender, String arg) {
         //Check for online players too
-        String playerEntry = null;
-        if (players.contains(arg)) { //Check in the list first for an exact match
-            playerEntry = arg;
-        } else { //Check on the server for players
+        String playerEntry = containsIgnoreCase(players, arg); //Check the list for an exact match first
+
+        if (playerEntry == null) { //Check on the server for players if an exact match isn't found
             Player p = getServer().getPlayer(arg);
             if (p == null) {
                 p = getServer().getPlayerExact(arg);
@@ -380,5 +376,14 @@ public class IPHelper extends JavaPlugin implements Listener {
 
     public boolean isIPBanned(String address) {
         return bannedIPs.contains(address);
+    }
+
+    public String containsIgnoreCase(List<String> list, String s) {
+        for (String entry : list) {
+            if (entry.equalsIgnoreCase(s)) {
+                return entry;
+            }
+        }
+        return null;
     }
 }
